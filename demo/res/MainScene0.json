@@ -1,0 +1,164 @@
+{
+    "id": 0,
+    "name": "MainScene",
+    "description": "Scene where the main loop occurs",
+    "entities": [
+        {
+            "id": 0,
+            "name": "Camera",
+            "description": "",
+            "transform": {
+                "translation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                }
+            },
+            "components": [
+                {
+                    "id": 0,
+                    "name": "Camera",
+                    "description": "",
+                    "modulePath": "",
+                    "moduleObject": {},
+                    "parameters": [
+                        {
+                            "label": "Width",
+                            "variableName": "width",
+                            "type": "",
+                            "currentValue": 20,
+                            "defaultValue": ""
+                        },
+                        {
+                            "label": "Height",
+                            "variableName": "height",
+                            "type": "",
+                            "currentValue": 15,
+                            "defaultValue": ""
+                        },
+                        {
+                            "label": "View Angle",
+                            "variableName": "viewAngle",
+                            "type": "",
+                            "currentValue": 90,
+                            "defaultValue": ""
+                        }
+                    ]
+                },
+                {
+                    "id": 0,
+                    "name": "ComponenteB",
+                    "description": "",
+                    "modulePath": "",
+                    "moduleObject": {},
+                    "parameters": [
+                        {
+                            "label": "Speed",
+                            "variableName": "spd",
+                            "type": "",
+                            "currentValue": 20,
+                            "defaultValue": ""
+                        }
+                    ]
+                }
+            ],
+            "parent": null,
+            "childEntities": null
+        },
+        {
+            "id": 1,
+            "name": "Enemy",
+            "description": "",
+            "transform": {},
+            "components": [],
+            "parent": null,
+            "childEntities": [
+                {
+                    "id": 0,
+                    "name": "body",
+                    "description": "",
+                    "transform": {},
+                    "components": [],
+                    "parent": 1,
+                    "childEntities": []
+                },
+                {
+                    "id": 0,
+                    "name": "weapon",
+                    "description": "",
+                    "transform": {},
+                    "components": [],
+                    "parent": 1,
+                    "childEntities": []
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Character",
+            "description": "",
+            "transform": {},
+            "components": [],
+            "parent": null,
+            "childEntities": [
+                {
+                    "id": 0,
+                    "name": "body",
+                    "description": "",
+                    "transform": {},
+                    "components": [],
+                    "parent": 2,
+                    "childEntities": [
+                        {
+                            "id": 0,
+                            "name": "head",
+                            "description": "",
+                            "transform": {},
+                            "components": [],
+                            "parent": 0,
+                            "childEntities": []
+                        },
+                        {
+                            "id": 0,
+                            "name": "torso",
+                            "description": "",
+                            "transform": {},
+                            "components": [],
+                            "parent": 0,
+                            "childEntities": []
+                        },
+                        {
+                            "id": 0,
+                            "name": "lowerbody",
+                            "description": "",
+                            "transform": {},
+                            "components": [],
+                            "parent": 0,
+                            "childEntities": []
+                        }
+                    ]
+                },
+                {
+                    "id": 0,
+                    "name": "weapon",
+                    "description": "",
+                    "transform": {},
+                    "components": [],
+                    "parent": 2,
+                    "childEntities": []
+                }
+            ]
+        }
+    ],
+    "tileMap": {}
+}

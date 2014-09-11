@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+	targetNamespace="http://www.gamesceneeditor.org/GameScene"
+	elementFormDefault="qualified"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:GameScene="http://www.gamesceneeditor.org/GameScene">
+
+	<element
+		name="gameSceneElement"
+		type="GameScene:gameSceneType"></element>
+
+	<complexType name="gameSceneType">
+		<sequence>
+			<element
+				name="gameEntity"
+				type="GameScene:gameEntityType"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute
+			name="id"
+			type="string"
+			use="required"></attribute>
+	</complexType>
+
+	<complexType name="transformType">
+		<sequence>
+			<element
+				name="translation"
+				type="GameScene:translationType"
+				maxOccurs="1"
+				minOccurs="1"></element>
+			<element
+				name="rotation"
+				type="GameScene:rotationType"
+				maxOccurs="1"
+				minOccurs="1"></element>
+			<element
+				name="scale"
+				type="GameScene:scaleType"
+				maxOccurs="1"
+				minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="gameEntityType">
+		<sequence>
+			<element
+				name="transform"
+				type="GameScene:transformType"
+				maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element
+				name="component"
+				type="GameScene:componentType"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element
+				name="gameEntity"
+				type="GameScene:gameEntityType"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute
+			name="id"
+			type="string"
+			use="required"></attribute>
+	</complexType>
+
+	<complexType name="componentType">
+		<sequence>
+			<element
+				name="parameters"
+				type="GameScene:componentParameter"
+				maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="scaleType">
+		<attribute
+			name="x"
+			type="float"
+			use="optional"
+			default="1"></attribute>
+		<attribute
+			name="y"
+			type="float"
+			use="optional"
+			default="1"></attribute>
+		<attribute
+			name="z"
+			type="float"
+			use="optional"
+			default="1"></attribute>
+	</complexType>
+
+	<complexType name="rotationType">
+		<attribute
+			name="x"
+			use="optional"
+			default="0">
+			<simpleType>
+				<restriction base="float">
+					<minInclusive value="0"></minInclusive>
+					<maxInclusive value="360"></maxInclusive>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute
+			name="y"
+			use="optional"
+			default="0">
+			<simpleType>
+				<restriction base="float">
+					<minInclusive value="0"></minInclusive>
+					<maxInclusive value="360"></maxInclusive>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute
+			name="z"
+			use="optional"
+			default="0">
+			<simpleType>
+				<restriction base="float">
+					<maxInclusive value="360"></maxInclusive>
+					<minInclusive value="0"></minInclusive>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+
+	<complexType name="translationType">
+		<attribute
+			name="x"
+			type="float"
+			use="optional"
+			default="0"></attribute>
+		<attribute
+			name="y"
+			type="float"
+			use="optional"
+			default="0"></attribute>
+		<attribute
+			name="z"
+			type="float"
+			use="optional"
+			default="0"></attribute>
+	</complexType>
+
+	<complexType name="behaviorScriptType">
+		<complexContent>
+			<extension base="GameScene:componentType">
+				<attribute
+					name="scriptPath"
+					type="string">
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="componentParameter">
+		<attribute
+			name="displayLabel"
+			type="string"></attribute>
+		<attribute
+			name="variableName"
+			type="string"></attribute>
+		<attribute name="parameterType">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="string"></enumeration>
+					<enumeration value="int"></enumeration>
+					<enumeration value="float"></enumeration>
+					<enumeration value="boolean"></enumeration>
+					<enumeration value="gameObject"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute
+			name="parameterValue"
+			type="string"></attribute>
+	</complexType>
+
+	<complexType name="boolean">
+		<complexContent>
+			<extension base="GameScene:componentParameter">
+				<attribute
+					name="value"
+					type="boolean"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="float">
+		<complexContent>
+			<extension base="GameScene:componentParameter">
+				<attribute
+					name="value"
+					type="float"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>
