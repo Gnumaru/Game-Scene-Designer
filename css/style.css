@@ -1,0 +1,12 @@
+div.borderedDiv {
+	border: 1px solid black;
+	padding: 1px;
+	margin: 1px;
+}
+
+div.main {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: #FFFFFF;
+}
