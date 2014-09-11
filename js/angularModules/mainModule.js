@@ -36,8 +36,20 @@
 			scope.toggle();
 		};
 
+		//Finds y value of given object
+		function findPos(obj) {
+		    var curtop = 0;
+		    if (obj.offsetParent) {
+		        do {
+		            curtop += obj.offsetTop;
+		        } while (obj = obj.offsetParent);
+		    return [curtop];
+		    }
+		}
+		
 		$scope.editEntity = function(scope) {
 			$scope.entityBeingEdited = scope.$modelValue;
+			document.getElementById("entityDivID").scrollIntoView();
 		}
 
 		$scope.newChildEntity = function(scope) {
@@ -81,6 +93,7 @@
 		var fixParentHoodWithReferences = require("js/util/parenthoodUtils").fixParentHoodWithReferences;
 		var fixEmptyArrays = require("js/util/parenthoodUtils").fixEmptyArrays;
 		var removeHashKeys = require("js/util/parenthoodUtils").removeHashKeys;
+		
 		$scope.sceneToJson = function() {
 			var rootHashKeys = []
 			for ( var key in $scope.gameScene.entities) {
