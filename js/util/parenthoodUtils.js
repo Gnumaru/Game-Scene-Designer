@@ -41,3 +41,33 @@ var removeHashKeys = function(parent) {
 }
 Object.freeze(removeHashKeys)
 exports.removeHashKeys = removeHashKeys;
+
+function objectFunctionAttributesToSourceString(obj) {
+	for ( var key in obj) {
+		if (obj.hasOwnProperty(key)) {
+			if (typeof obj[key] === "function") {
+				obj[key] = obj[key].toString();
+			} else if (typeof obj[key] === "object") { //if object or array
+				obj[key] = objectFunctionAttributesToSourceString(obj[key]);
+			}
+		}
+	}
+	return obj;
+}
+Object.freeze(objectFunctionAttributesToSourceString)
+exports.objectFunctionAttributesToSourceString = objectFunctionAttributesToSourceString;
+
+function objectFunctionSourceStringAttributesToFunctions(obj) {
+	for ( var key in obj) {
+		if (obj.hasOwnProperty(key)) {
+			if (typeof obj[key] === "string" && obj[key].indexOf("function") === 0 && obj[key].lastIndexOf("}") === obj[key].length - 1) {
+				obj[key] = (new Function("return " + obj[key]))();
+			} else if (typeof obj[key] === "object") { //if object or array
+				obj[key] = objectFunctionSourceStringAttributesToFunctions(obj[key]);
+			}
+		}
+	}
+	return obj;
+}
+Object.freeze(objectFunctionSourceStringAttributesToFunctions)
+exports.objectFunctionSourceStringAttributesToFunctions = objectFunctionSourceStringAttributesToFunctions;
