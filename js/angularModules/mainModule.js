@@ -38,22 +38,22 @@
 
 		//Finds y value of given object
 		function findPos(obj) {
-		    var curtop = 0;
-		    if (obj.offsetParent) {
-		        do {
-		            curtop += obj.offsetTop;
-		        } while (obj = obj.offsetParent);
-		    return [curtop];
-		    }
+			var curtop = 0;
+			if (obj.offsetParent) {
+				do {
+					curtop += obj.offsetTop;
+				} while (obj = obj.offsetParent);
+				return [ curtop ];
+			}
 		}
-		
+
 		$scope.editEntity = function(scope) {
 			$scope.entityBeingEdited = scope.$modelValue;
 			document.getElementById("entityDivID").scrollIntoView();
 		}
 
 		$scope.newChildEntity = function(scope) {
-			var newEntity = clone(require("js/model/entity").entity);
+			var newEntity = clone(require("../../js/model/entity").entity);
 			newEntity.name = "gameEntity";
 			newEntity.parent = scope.$modelValue;
 			if (!scope.$modelValue.childEntities) {
@@ -66,13 +66,13 @@
 		};
 
 		$scope.addComponent = function(scope) {
-			var newComponent = clone(require("js/model/component").component);
+			var newComponent = clone(require("../../js/model/component").component);
 			newComponent.name = "Empty Component";
 			$scope.entityBeingEdited.components.push(newComponent);
 		};
 
 		$scope.addParameter = function(scope) {
-			var newParameter = clone(require("js/model/parameter").parameter);
+			var newParameter = clone(require("../../js/model/parameter").parameter);
 			newParameter.name = "Empty Parameter";
 			scope.push(newParameter);
 		}
@@ -89,11 +89,11 @@
 			});
 		}
 
-		var fixParentHoodWithIds = require("js/util/parenthoodUtils").fixParentHoodWithIds;
-		var fixParentHoodWithReferences = require("js/util/parenthoodUtils").fixParentHoodWithReferences;
-		var fixEmptyArrays = require("js/util/parenthoodUtils").fixEmptyArrays;
-		var removeHashKeys = require("js/util/parenthoodUtils").removeHashKeys;
-		
+		var fixParentHoodWithIds = require("../../js/util/parenthoodUtils").fixParentHoodWithIds;
+		var fixParentHoodWithReferences = require("../../js/util/parenthoodUtils").fixParentHoodWithReferences;
+		var fixEmptyArrays = require("../../js/util/parenthoodUtils").fixEmptyArrays;
+		var removeHashKeys = require("../../js/util/parenthoodUtils").removeHashKeys;
+
 		$scope.sceneToJson = function() {
 			var rootHashKeys = []
 			for ( var key in $scope.gameScene.entities) {
@@ -111,7 +111,7 @@
 			var jsonBlob = new Blob([ formatedJson ], {
 				type : "text/plain;charset=utf-8"
 			});
-			var saveAs = require("js/libs/FileSaver_v20140829");
+			var saveAs = require("../../js/libs/FileSaver_v20140829");
 			saveAs(jsonBlob, $scope.gameScene.name + ".json");
 		}
 
@@ -141,15 +141,15 @@
 		}
 
 		$scope.addRootEntity = function() {
-			var newEntity = clone(require("js/model/entity").entity);
+			var newEntity = clone(require("../../js/model/entity").entity);
 			newEntity.name = "gameEntity";
 			newEntity.parent = null;
 			$scope.gameScene.entities.push(newEntity);
 		}
 
 		$scope.getTypes = function(parameter) {
-			var types = clone(require("js/model/parameterTypes").parameterTypes);
-			if(parameter.type === null || parameter.type === undefined || parameter.type === ""){
+			var types = clone(require("../../js/model/parameterTypes").parameterTypes);
+			if (parameter.type === null || parameter.type === undefined || parameter.type === "") {
 				parameter.type = types[0];
 			}
 			return types;
