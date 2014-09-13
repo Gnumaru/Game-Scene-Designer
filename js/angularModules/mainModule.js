@@ -7,8 +7,8 @@
 	mainModule.controller('myController', function($scope) {
 		//test game scene
 		$scope.gameScene = window.scene;
-		//roleList1 to treeview
-		//		$scope.roleList = $scope.gameScene;
+		$scope.globalComponent = {};
+		$scope.loadedComponents = [];
 
 		$scope.removeChildEntity = function() {
 			if ($scope.mytree.currentNode.parent === null) {//if parent is null, it is a scene entity
@@ -126,10 +126,17 @@
 			var fileInput = document.getElementById('fileInput');
 			if (!fileInput) {
 				fileInput = document.createElement("input");
-				fileInput.type = "file";
 				fileInput.id = "fileInput";
+				fileInput.type = "file";
+				fileInput.accept = ".scene.json";
 			}
+			fileInput.removeAttribute("multiple");
+
 			fileInput.addEventListener('change', function(e) {
+				console.log(fileInput);
+				console.log(fileInput.files);
+				console.log(fileInput.files[0]);
+				console.log(fileInput.files[0].name);
 				var file = fileInput.files[0];
 				var textType = /text.*/;
 				var reader = new FileReader();
@@ -180,9 +187,12 @@
 			var fileInput = document.getElementById('fileInput');
 			if (!fileInput) {
 				fileInput = document.createElement("input");
-				fileInput.type = "file";
 				fileInput.id = "fileInput";
+				fileInput.type = "file";
+				fileInput.accept = ".component.json";
 			}
+			fileInput.setAttributeNode(document.createAttribute("multiple"));
+
 			fileInput.addEventListener('change', function(e) {
 				var file = fileInput.files[0];
 				var textType = /text.*/;
@@ -190,11 +200,16 @@
 				reader.onload = function(e) {
 					var component = JSON.parse(reader.result);
 					entityBeingEdited.components.push(component);
+					$scope.loadedComponents.push(component);
 					$scope.$apply();
 				}
 				reader.readAsText(file);
 			});
 			fileInput.click();
+		}
+		
+		$scope.reuseComponent = function(entityBeingEdited, globalComponent){
+			entityBeingEdited.components.push(require("../../js/util/clone").clone(globalComponent));
 		}
 	});
 })();

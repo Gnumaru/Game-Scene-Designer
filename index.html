@@ -263,8 +263,12 @@
 							</td>
 						</tr>
 						<tr>
-							<td><input type="button" ng-click="addComponent();" value="Add Component"></input>
-							<input type="button" ng-click="jsonToComponent(entityBeingEdited);" value="Load Component"></input></td>
+							<td>
+								<input type="button" ng-click="addComponent();" value="Add Component"></input>
+								<input type="button" ng-click="jsonToComponent(entityBeingEdited);" value="Load Component"></input>
+								<input type="button" ng-click="reuseComponent(entityBeingEdited, globalComponent);" value="Re-use Component"></input>
+								<select ng-model="globalComponent" ng-options="component as component.name for component in loadedComponents"></select>
+							</td>
 						</tr>
 					</table>
 				</div>
