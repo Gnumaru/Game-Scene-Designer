@@ -54,12 +54,18 @@
 
 		$scope.newChildEntity = function(scope) {
 			var newEntity = clone(require("../../js/model/entity").entity);
+			newEntity.transform = clone(require("../../js/model/transform").transform);
 			newEntity.name = "gameEntity";
 			newEntity.parent = scope.$modelValue;
 			if (!scope.$modelValue.childEntities) {
 				scope.$modelValue.childEntities = [];
 			}
 			scope.$modelValue.childEntities.push(newEntity);
+
+			var div = require("../../js/ui/placeholder").placeholder("" + Math.random());
+			div.entity = newEntity;
+			div.scope = scope;
+
 			//cant call apply
 			//scope.$apply();
 			//because "apply already in progress"
@@ -68,6 +74,7 @@
 		$scope.addComponent = function(scope) {
 			var newComponent = clone(require("../../js/model/component").component);
 			newComponent.name = "Empty Component";
+			newComponent.id = +Math.random().toString().substring(2);
 			$scope.entityBeingEdited.components.push(newComponent);
 		};
 
@@ -112,7 +119,7 @@
 				type : "text/plain;charset=utf-8"
 			});
 			var saveAs = require("../../js/libs/FileSaver_v20140829");
-			saveAs(jsonBlob, $scope.gameScene.name + ".json");
+			saveAs(jsonBlob, $scope.gameScene.name + ".scene.json");
 		}
 
 		$scope.jsonToScene = function() {
@@ -121,22 +128,22 @@
 				fileInput = document.createElement("input");
 				fileInput.type = "file";
 				fileInput.id = "fileInput";
-				fileInput.addEventListener('change', function(e) {
-					var file = fileInput.files[0];
-					var textType = /text.*/;
-					var reader = new FileReader();
-					reader.onload = function(e) {
-						var scene = JSON.parse(reader.result);
-						for (var key = 0; key < scene.entities.length; key++) {
-							fixParentHoodWithReferences(scene.entities[key]);
-							fixEmptyArrays(scene.entities[key]);
-						}
-						$scope.gameScene = scene;
-						$scope.$apply();
-					}
-					reader.readAsText(file);
-				});
 			}
+			fileInput.addEventListener('change', function(e) {
+				var file = fileInput.files[0];
+				var textType = /text.*/;
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var scene = JSON.parse(reader.result);
+					for (var key = 0; key < scene.entities.length; key++) {
+						fixParentHoodWithReferences(scene.entities[key]);
+						fixEmptyArrays(scene.entities[key]);
+					}
+					$scope.gameScene = scene;
+					$scope.$apply();
+				}
+				reader.readAsText(file);
+			});
 			fileInput.click();
 		}
 
@@ -153,6 +160,41 @@
 				parameter.type = types[0];
 			}
 			return types;
+		}
+
+		$scope.show = function(a) {
+			console.log(a);
+		}
+
+		$scope.componentToJson = function(component) {
+			var formatedJson = JSON.stringify(component, null, 4);
+			var jsonBlob = new Blob([ formatedJson ], {
+				type : "text/plain;charset=utf-8"
+			});
+
+			var saveAs = require("../../js/libs/FileSaver_v20140829");
+			saveAs(jsonBlob, component.name + ".component.json");
+		}
+
+		$scope.jsonToComponent = function(entityBeingEdited) {
+			var fileInput = document.getElementById('fileInput');
+			if (!fileInput) {
+				fileInput = document.createElement("input");
+				fileInput.type = "file";
+				fileInput.id = "fileInput";
+			}
+			fileInput.addEventListener('change', function(e) {
+				var file = fileInput.files[0];
+				var textType = /text.*/;
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var component = JSON.parse(reader.result);
+					entityBeingEdited.components.push(component);
+					$scope.$apply();
+				}
+				reader.readAsText(file);
+			});
+			fileInput.click();
 		}
 	});
 })();

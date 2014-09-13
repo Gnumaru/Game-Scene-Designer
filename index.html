@@ -22,7 +22,7 @@
 	type="text/css"
 	href="./css/bootstrap.css">
 </head>
-<body>
+<body style="-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">
 	este
 	<br /> texto
 	<br /> está
@@ -172,6 +172,7 @@
 						<tr data-ng-repeat="component in entityBeingEdited.components">
 							<td>
 								<div class="borderedDiv">
+								<input type="button" ng-click="componentToJson(component);" value="Save Component"></input>
 									<table>
 										<tr>
 											<td><b>{{component.name}}</b></td>
@@ -189,6 +190,10 @@
 										<tr>
 											<td>Description</td>
 											<td><input type="text" ng-model="component.description"></input></td>
+										</tr>
+										<tr>
+											<td>Script</td>
+											<td><input type="file" ng-model="component.modulePath" ng-click="show(component.modulePath)"></input></td>
 										</tr>
 										<tr>
 											<td colspan="2">
@@ -257,7 +262,10 @@
 								</div>
 							</td>
 						</tr>
-						<tr><td><input type="button" ng-click="addComponent();" value="Adicionar Componente"></input></td></tr>
+						<tr>
+							<td><input type="button" ng-click="addComponent();" value="Add Component"></input>
+							<input type="button" ng-click="jsonToComponent(entityBeingEdited);" value="Load Component"></input></td>
+						</tr>
 					</table>
 				</div>
 			</div>
