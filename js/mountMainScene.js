@@ -6,7 +6,7 @@ var componentModel = require("./model/component").component;
 var moduleObjectModel = require("./model/moduleObject").moduleObject;
 var parameterModel = require("./model/parameter").parameter;
 var parameterTypes = require("./model/parameterTypes").parameterTypes;
-var fixParentHoodWithReferences = require("./util/parenthoodUtils").fixParentHoodWithReferences;
+var fixParentHoodWithReferences = require("./util/entityUtils").fixParentHoodWithReferences;
 
 var scene = clone(sceneModel);
 

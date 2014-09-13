@@ -96,10 +96,10 @@
 			});
 		}
 
-		var fixParentHoodWithIds = require("../../js/util/parenthoodUtils").fixParentHoodWithIds;
-		var fixParentHoodWithReferences = require("../../js/util/parenthoodUtils").fixParentHoodWithReferences;
-		var fixEmptyArrays = require("../../js/util/parenthoodUtils").fixEmptyArrays;
-		var removeHashKeys = require("../../js/util/parenthoodUtils").removeHashKeys;
+		var fixParentHoodWithIds = require("../../js/util/entityUtils").fixParentHoodWithIds;
+		var fixParentHoodWithReferences = require("../../js/util/entityUtils").fixParentHoodWithReferences;
+		var fixEmptyArrays = require("../../js/util/entityUtils").fixEmptyArrays;
+		var removeHashKeys = require("../../js/util/entityUtils").removeHashKeys;
 
 		$scope.sceneToJson = function() {
 			var rootHashKeys = []
