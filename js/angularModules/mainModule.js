@@ -6,7 +6,7 @@
 	//controller
 	mainModule.controller('myController', function($scope) {
 		//test game scene
-		$scope.gameScene = window.scene;
+		$scope.gameScene = require("../../js/mountMainScene").scene;
 		$scope.globalComponent = {};
 		$scope.loadedComponents = [];
 

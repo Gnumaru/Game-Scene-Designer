@@ -1,3 +1,3 @@
 require("./nonModularLibraries");
-require("./mountMainScene");
+//require("./mountMainScene");
 require("./angularModules/mainModule");
