@@ -5,6 +5,15 @@ A game-engine agnostic designer for game scenes!
 
 Design your game scene once and run it in ANY game engine or framework (as long as it implements support for the game-scene file format).
 
+Try the demo!
+
+http://gnumaru.github.io/Game-Scene-Designer/demo/
+
+Or view the project's page (currently blank)
+
+http://gnumaru.github.io/Game-Scene-Designer/
+
+
 Motivation
 ===================
 

@@ -11,31 +11,38 @@ var fixParentHoodWithReferences = require("./util/parenthoodUtils").fixParentHoo
 window.scene = clone(sceneModel);
 
 window.scene.name = "MainScene";
-window.scene.id = 0;
+window.scene.id = +Math.random().toString().substring(2);
 window.scene.description = "Scene where the main loop occurs";
 window.scene.entities = [ clone(entityModel), clone(entityModel), clone(entityModel) ];
 
 window.scene.entities[0].name = "Camera";
-window.scene.entities[0].id = 0;
+window.scene.entities[0].id = +Math.random().toString().substring(2);
 window.scene.entities[1].name = "Enemy";
-window.scene.entities[1].id = 1;
+window.scene.entities[1].id = +Math.random().toString().substring(2);
 window.scene.entities[2].name = "Character";
-window.scene.entities[2].id = 2;
+window.scene.entities[2].id = +Math.random().toString().substring(2);
 
 window.scene.entities[0].childEntities = null;
 
 window.scene.entities[1].childEntities = [ clone(entityModel), clone(entityModel) ]
 window.scene.entities[1].childEntities[0].name = "body";
+window.scene.entities[1].childEntities[0].id = +Math.random().toString().substring(2);
 window.scene.entities[1].childEntities[1].name = "weapon";
+window.scene.entities[1].childEntities[1].id = +Math.random().toString().substring(2);
 
 window.scene.entities[2].childEntities = [ clone(entityModel), clone(entityModel) ];
 window.scene.entities[2].childEntities[0].name = "body";
+window.scene.entities[2].childEntities[0].id = +Math.random().toString().substring(2);
 window.scene.entities[2].childEntities[1].name = "weapon";
+window.scene.entities[2].childEntities[1].id = +Math.random().toString().substring(2);
 
 window.scene.entities[2].childEntities[0].childEntities = [ clone(entityModel), clone(entityModel), clone(entityModel), ];
 window.scene.entities[2].childEntities[0].childEntities[0].name = "head";
+window.scene.entities[2].childEntities[0].childEntities[0].id = +Math.random().toString().substring(2);
 window.scene.entities[2].childEntities[0].childEntities[1].name = "torso";
+window.scene.entities[2].childEntities[0].childEntities[1].id = +Math.random().toString().substring(2);
 window.scene.entities[2].childEntities[0].childEntities[2].name = "lowerbody";
+window.scene.entities[2].childEntities[0].childEntities[2].id = +Math.random().toString().substring(2);
 
 window.scene.entities[0].transform = clone(transformModel);
 window.scene.entities[0].components = [ clone(componentModel), clone(componentModel) ];
@@ -57,7 +64,6 @@ window.scene.entities[0].components[1].parameters[0] = clone(parameterModel);
 window.scene.entities[0].components[1].parameters[0].label = "Speed";
 window.scene.entities[0].components[1].parameters[0].variableName = "spd";
 window.scene.entities[0].components[1].parameters[0].currentValue = 20;
-
 
 for ( var key in window.scene.entities) {
 	fixParentHoodWithReferences(window.scene.entities[key]);
