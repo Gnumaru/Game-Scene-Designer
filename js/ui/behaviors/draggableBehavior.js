@@ -16,6 +16,9 @@ var draggableBehavior = function(e) {
 
 	var e = e || window.event;
 	var element = e.target || e.srcElement;
+	
+	element.$scope.entityBeingEdited = element.entity;
+	element.$scope.$apply();
 
 	//takes the element node to hold the coordinates where the click occurs inside the element
 	element.innerX = e.clientX + window.pageXOffset - element.offsetLeft;
@@ -24,6 +27,7 @@ var draggableBehavior = function(e) {
 	window.addEventListener('mousemove', followMouseMovement, false);
 	window.addEventListener('mouseup', function() {
 		window.removeEventListener('mousemove', followMouseMovement, false);
+		//in case applying the scope every mousemove event call is too heavy, consider applying only after removing the listener
 		//element.scope.$apply();
 	}, true);
 };

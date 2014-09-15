@@ -65,6 +65,7 @@
 			var div = require("../../js/ui/placeholder").placeholder("" + Math.random());
 			div.entity = newEntity;
 			div.scope = scope;
+			div.$scope = $scope;
 
 			//cant call apply
 			//scope.$apply();
