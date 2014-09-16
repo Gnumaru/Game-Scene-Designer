@@ -6,16 +6,17 @@
 	//controller
 	mainModule.controller('myController', function($scope) {
 		//test game scene
-		$scope.gameScene = window.scene;
-		//roleList1 to treeview
-		//		$scope.roleList = $scope.gameScene;
+		$scope.gameScene = require("../../js/mountMainScene").scene;
+		$scope.globalComponent = {};
+		$scope.loadedComponents = [];
+		$scope.upperView = false;
 
 		$scope.removeChildEntity = function() {
-			if ($scope.mytree.currentNode.parent === null) {//if parent is null, it is a scene entity
+			if($scope.mytree.currentNode.parent === null) {//if parent is null, it is a scene entity
 				//				var key = $scope.gameScene.indexOf($scope.mytree.currentNode);
 				//				$scope.mytree.currentNode = null;
-				for (key in $scope.gameScene) {
-					if ($scope.gameScene[key] === $scope.mytree.currentNode) {
+				for(key in $scope.gameScene) {
+					if($scope.gameScene[key] === $scope.mytree.currentNode) {
 						$scope.gameScene[key] = null;
 						$scope.mytree.currentNode = null;
 						break;
@@ -39,7 +40,7 @@
 		//Finds y value of given object
 		function findPos(obj) {
 			var curtop = 0;
-			if (obj.offsetParent) {
+			if(obj.offsetParent) {
 				do {
 					curtop += obj.offsetTop;
 				} while (obj = obj.offsetParent);
@@ -57,7 +58,7 @@
 			newEntity.transform = clone(require("../../js/model/transform").transform);
 			newEntity.name = "gameEntity";
 			newEntity.parent = scope.$modelValue;
-			if (!scope.$modelValue.childEntities) {
+			if(!scope.$modelValue.childEntities) {
 				scope.$modelValue.childEntities = [];
 			}
 			scope.$modelValue.childEntities.push(newEntity);
@@ -65,6 +66,7 @@
 			var div = require("../../js/ui/placeholder").placeholder("" + Math.random());
 			div.entity = newEntity;
 			div.scope = scope;
+			div.$scope = $scope;
 
 			//cant call apply
 			//scope.$apply();
@@ -96,21 +98,21 @@
 			});
 		}
 
-		var fixParentHoodWithIds = require("../../js/util/parenthoodUtils").fixParentHoodWithIds;
-		var fixParentHoodWithReferences = require("../../js/util/parenthoodUtils").fixParentHoodWithReferences;
-		var fixEmptyArrays = require("../../js/util/parenthoodUtils").fixEmptyArrays;
-		var removeHashKeys = require("../../js/util/parenthoodUtils").removeHashKeys;
+		var fixParentHoodWithIds = require("../../js/util/entityUtils").fixParentHoodWithIds;
+		var fixParentHoodWithReferences = require("../../js/util/entityUtils").fixParentHoodWithReferences;
+		var fixEmptyArrays = require("../../js/util/entityUtils").fixEmptyArrays;
+		var removeHashKeys = require("../../js/util/entityUtils").removeHashKeys;
 
 		$scope.sceneToJson = function() {
 			var rootHashKeys = []
-			for ( var key in $scope.gameScene.entities) {
+			for( var key in $scope.gameScene.entities) {
 				fixParentHoodWithIds($scope.gameScene.entities[key]);
 				removeHashKeys($scope.gameScene.entities[key]);
 				rootHashKeys.push($scope.gameScene.entities[key].$$hashKey);
 				delete $scope.gameScene.entities[key].$$hashKey;
 			}
 			var formatedJson = JSON.stringify($scope.gameScene, null, 4);
-			for ( var key in $scope.gameScene.entities) {
+			for( var key in $scope.gameScene.entities) {
 				fixParentHoodWithReferences($scope.gameScene.entities[key]);
 				$scope.gameScene.entities[key].$$hashKey = rootHashKeys[key];
 			}
@@ -124,18 +126,25 @@
 
 		$scope.jsonToScene = function() {
 			var fileInput = document.getElementById('fileInput');
-			if (!fileInput) {
+			if(!fileInput) {
 				fileInput = document.createElement("input");
-				fileInput.type = "file";
 				fileInput.id = "fileInput";
+				fileInput.type = "file";
+				fileInput.accept = ".scene.json";
 			}
+			fileInput.removeAttribute("multiple");
+
 			fileInput.addEventListener('change', function(e) {
+				console.log(fileInput);
+				console.log(fileInput.files);
+				console.log(fileInput.files[0]);
+				console.log(fileInput.files[0].name);
 				var file = fileInput.files[0];
 				var textType = /text.*/;
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					var scene = JSON.parse(reader.result);
-					for (var key = 0; key < scene.entities.length; key++) {
+					for(var key = 0; key < scene.entities.length; key++) {
 						fixParentHoodWithReferences(scene.entities[key]);
 						fixEmptyArrays(scene.entities[key]);
 					}
@@ -156,7 +165,7 @@
 
 		$scope.getTypes = function(parameter) {
 			var types = clone(require("../../js/model/parameterTypes").parameterTypes);
-			if (parameter.type === null || parameter.type === undefined || parameter.type === "") {
+			if(parameter.type === null || parameter.type === undefined || parameter.type === "") {
 				parameter.type = types[0];
 			}
 			return types;
@@ -178,11 +187,14 @@
 
 		$scope.jsonToComponent = function(entityBeingEdited) {
 			var fileInput = document.getElementById('fileInput');
-			if (!fileInput) {
+			if(!fileInput) {
 				fileInput = document.createElement("input");
-				fileInput.type = "file";
 				fileInput.id = "fileInput";
+				fileInput.type = "file";
+				fileInput.accept = ".component.json";
 			}
+			fileInput.setAttributeNode(document.createAttribute("multiple"));
+
 			fileInput.addEventListener('change', function(e) {
 				var file = fileInput.files[0];
 				var textType = /text.*/;
@@ -190,11 +202,26 @@
 				reader.onload = function(e) {
 					var component = JSON.parse(reader.result);
 					entityBeingEdited.components.push(component);
+					$scope.loadedComponents.push(component);
 					$scope.$apply();
 				}
 				reader.readAsText(file);
 			});
 			fileInput.click();
+		}
+
+		$scope.reuseComponent = function(entityBeingEdited, globalComponent) {
+			entityBeingEdited.components.push(require("../../js/util/clone").clone(globalComponent));
+		}
+
+		$scope.changeView = function() {
+			$scope.upperView = !$scope.upperView;
+			var divs = document.getElementsByTagName("div");
+			for( var key in divs) {
+				if(divs[key].entity) {//if this div holds a reference to any game entity
+					divs[key].style.top = (window.innerHeight - ($scope.upperView ? divs[key].entity.transform.translation.z : divs[key].entity.transform.translation.y)) + "px";
+				}
+			}
 		}
 	});
 })();
