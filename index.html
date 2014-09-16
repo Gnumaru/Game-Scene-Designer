@@ -50,8 +50,9 @@
 		      node-label : each node's label
 		      node-children: each node's children
 		    -->
-		    <input type="button" ng-click="sceneToJson();" value="Save Scene"></input>
-		    <input type="button" ng-click="jsonToScene();" value="Load Scene"></input>
+		    <input type="button" ng-click="sceneToJson();" value="Save Scene" title="Save the current game scene to a json file."></input>
+		    <input type="button" ng-click="jsonToScene();" value="Load Scene" title="Load a previously saved game scene from a json file"></input>
+		    <input type="button" ng-click="changeView();" value="Change to {{upperView ? 'Front' : 'Upper'}} View" title="Switch the view mode between front view and upper view"></input>
 		    <!-- <input id="fileInput" name="fileInput" type="file" ng-change="" ng-model="a" ng-click="jsonToScene();" ></input> -->
 		    <!-- <input type="file" ng-file-select="onFileSelect($files)"> -->
 			<br /><b>{{gameScene.name}} (Scene {{gameScene.id}})</b>

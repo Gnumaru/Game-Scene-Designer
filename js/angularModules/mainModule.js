@@ -9,13 +9,14 @@
 		$scope.gameScene = require("../../js/mountMainScene").scene;
 		$scope.globalComponent = {};
 		$scope.loadedComponents = [];
+		$scope.upperView = false;
 
 		$scope.removeChildEntity = function() {
-			if ($scope.mytree.currentNode.parent === null) {//if parent is null, it is a scene entity
+			if($scope.mytree.currentNode.parent === null) {//if parent is null, it is a scene entity
 				//				var key = $scope.gameScene.indexOf($scope.mytree.currentNode);
 				//				$scope.mytree.currentNode = null;
-				for (key in $scope.gameScene) {
-					if ($scope.gameScene[key] === $scope.mytree.currentNode) {
+				for(key in $scope.gameScene) {
+					if($scope.gameScene[key] === $scope.mytree.currentNode) {
 						$scope.gameScene[key] = null;
 						$scope.mytree.currentNode = null;
 						break;
@@ -39,7 +40,7 @@
 		//Finds y value of given object
 		function findPos(obj) {
 			var curtop = 0;
-			if (obj.offsetParent) {
+			if(obj.offsetParent) {
 				do {
 					curtop += obj.offsetTop;
 				} while (obj = obj.offsetParent);
@@ -57,7 +58,7 @@
 			newEntity.transform = clone(require("../../js/model/transform").transform);
 			newEntity.name = "gameEntity";
 			newEntity.parent = scope.$modelValue;
-			if (!scope.$modelValue.childEntities) {
+			if(!scope.$modelValue.childEntities) {
 				scope.$modelValue.childEntities = [];
 			}
 			scope.$modelValue.childEntities.push(newEntity);
@@ -104,14 +105,14 @@
 
 		$scope.sceneToJson = function() {
 			var rootHashKeys = []
-			for ( var key in $scope.gameScene.entities) {
+			for( var key in $scope.gameScene.entities) {
 				fixParentHoodWithIds($scope.gameScene.entities[key]);
 				removeHashKeys($scope.gameScene.entities[key]);
 				rootHashKeys.push($scope.gameScene.entities[key].$$hashKey);
 				delete $scope.gameScene.entities[key].$$hashKey;
 			}
 			var formatedJson = JSON.stringify($scope.gameScene, null, 4);
-			for ( var key in $scope.gameScene.entities) {
+			for( var key in $scope.gameScene.entities) {
 				fixParentHoodWithReferences($scope.gameScene.entities[key]);
 				$scope.gameScene.entities[key].$$hashKey = rootHashKeys[key];
 			}
@@ -125,7 +126,7 @@
 
 		$scope.jsonToScene = function() {
 			var fileInput = document.getElementById('fileInput');
-			if (!fileInput) {
+			if(!fileInput) {
 				fileInput = document.createElement("input");
 				fileInput.id = "fileInput";
 				fileInput.type = "file";
@@ -143,7 +144,7 @@
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					var scene = JSON.parse(reader.result);
-					for (var key = 0; key < scene.entities.length; key++) {
+					for(var key = 0; key < scene.entities.length; key++) {
 						fixParentHoodWithReferences(scene.entities[key]);
 						fixEmptyArrays(scene.entities[key]);
 					}
@@ -164,7 +165,7 @@
 
 		$scope.getTypes = function(parameter) {
 			var types = clone(require("../../js/model/parameterTypes").parameterTypes);
-			if (parameter.type === null || parameter.type === undefined || parameter.type === "") {
+			if(parameter.type === null || parameter.type === undefined || parameter.type === "") {
 				parameter.type = types[0];
 			}
 			return types;
@@ -186,7 +187,7 @@
 
 		$scope.jsonToComponent = function(entityBeingEdited) {
 			var fileInput = document.getElementById('fileInput');
-			if (!fileInput) {
+			if(!fileInput) {
 				fileInput = document.createElement("input");
 				fileInput.id = "fileInput";
 				fileInput.type = "file";
@@ -208,9 +209,19 @@
 			});
 			fileInput.click();
 		}
-		
-		$scope.reuseComponent = function(entityBeingEdited, globalComponent){
+
+		$scope.reuseComponent = function(entityBeingEdited, globalComponent) {
 			entityBeingEdited.components.push(require("../../js/util/clone").clone(globalComponent));
+		}
+
+		$scope.changeView = function() {
+			$scope.upperView = !$scope.upperView;
+			var divs = document.getElementsByTagName("div");
+			for( var key in divs) {
+				if(divs[key].entity) {//if this div holds a reference to any game entity
+					divs[key].style.top = (window.innerHeight - ($scope.upperView ? divs[key].entity.transform.translation.z : divs[key].entity.transform.translation.y)) + "px";
+				}
+			}
 		}
 	});
 })();
