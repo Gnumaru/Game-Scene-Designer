@@ -7,9 +7,10 @@ var placeholder = function(id) {
 	div.style.background = "red";
 	div.style.left = "600px";
 	div.style.top = "100px";
-//	console.log("created div \"" + id + "\"");
+	//	console.log("created div \"" + id + "\"");
 	div.addEventListener('mousedown', require("../../js/ui/behaviors/draggableBehavior").draggableBehavior, false);
 	document.body.appendChild(div);
+	console.log('Created div ' + id);
 	return div;
 }
 

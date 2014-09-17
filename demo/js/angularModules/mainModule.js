@@ -6,7 +6,10 @@
 	//controller
 	mainModule.controller('myController', function($scope) {
 		//test game scene
-		$scope.gameScene = require("../../js/mountMainScene").scene;
+		//		$scope.gameScene = require("../../js/mountMainScene").scene;
+		//empty game scene
+		$scope.gameScene = clone(require("../../js/model/scene").scene);
+
 		$scope.globalComponent = {};
 		$scope.loadedComponents = [];
 		$scope.upperView = false;
@@ -102,6 +105,7 @@
 		var fixParentHoodWithReferences = require("../../js/util/entityUtils").fixParentHoodWithReferences;
 		var fixEmptyArrays = require("../../js/util/entityUtils").fixEmptyArrays;
 		var removeHashKeys = require("../../js/util/entityUtils").removeHashKeys;
+		var representEntityTreeWithDivs = require("../../js/util/entityUtils").representEntityTreeWithDivs;
 
 		$scope.sceneToJson = function() {
 			var rootHashKeys = []
@@ -135,10 +139,8 @@
 			fileInput.removeAttribute("multiple");
 
 			fileInput.addEventListener('change', function(e) {
-				console.log(fileInput);
-				console.log(fileInput.files);
-				console.log(fileInput.files[0]);
-				console.log(fileInput.files[0].name);
+//				console.log(fileInput.files[0].mozFullPath);
+//				console.log(fileInput.files[0].name);
 				var file = fileInput.files[0];
 				var textType = /text.*/;
 				var reader = new FileReader();
@@ -147,6 +149,7 @@
 					for(var key = 0; key < scene.entities.length; key++) {
 						fixParentHoodWithReferences(scene.entities[key]);
 						fixEmptyArrays(scene.entities[key]);
+						representEntityTreeWithDivs(scene.entities[key], $scope);
 					}
 					$scope.gameScene = scene;
 					$scope.$apply();
@@ -158,9 +161,15 @@
 
 		$scope.addRootEntity = function() {
 			var newEntity = clone(require("../../js/model/entity").entity);
+			newEntity.transform = clone(require("../../js/model/transform").transform);
 			newEntity.name = "gameEntity";
 			newEntity.parent = null;
 			$scope.gameScene.entities.push(newEntity);
+
+			var div = require("../../js/ui/placeholder").placeholder("" + Math.random());
+			div.entity = newEntity;
+			div.scope = $scope;
+			div.$scope = $scope;
 		}
 
 		$scope.getTypes = function(parameter) {
