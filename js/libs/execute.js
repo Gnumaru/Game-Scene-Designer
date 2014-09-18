@@ -1,5 +1,5 @@
 /*
- * execute.js, planning version https://github.com/Gnumaru/executejs
+ * execute.js, alpha version https://github.com/Gnumaru/executejs
  * 
  * Copyright 2014, gnumaru Released under the MIT license (plus the "non evil
  * use" clause) https://github.com/Gnumaru/executejs/blob/master/LICENSE
@@ -221,8 +221,6 @@
 						executionStack.push(filePath);
 						//call the function setting "window" to "this" so every global defined there would still be defined as global.
 						returnValue = func.call(window);
-						//global execution
-						//eval.call(window, remoteContent);
 						executionStack.pop();
 						executedScriptsCache[filePath] = {
 							originalScript : remoteContent,
@@ -299,7 +297,7 @@
 			filePath = normalizeFilePath(filePath);
 			var remoteContent = retrieveRemoteFileContent(filePath);//retrieve script via xmlhttp
 			console.log("Forcing execution of \"" + filePath + "\".");
-			eval.call(window, remoteContent);//execute it in the global context
+			(new Function(remoteContent))();//execute it in the global context
 		};
 
 		/**
