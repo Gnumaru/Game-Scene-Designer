@@ -90,7 +90,7 @@ var representEntityTreeWithDivs = function representEntityTreeWithDivs(parent, $
 	div.style.top = y + "px";
 
 	for( var key in parent.childEntities) {
-		representEntityTreeWithDivs(parent.childEntities[key]);
+		representEntityTreeWithDivs(parent.childEntities[key], $scope);
 	}
 }
 Object.freeze(representEntityTreeWithDivs)

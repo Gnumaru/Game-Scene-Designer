@@ -63,3 +63,14 @@ var randomb64String = function randomb64String(length) {
 };
 Object.freeze(randomb64String)
 exports.randomb64String = randomb64String;
+
+var randomHexString = function randomHexString(length) {
+	var string = [];
+	while (length > 0) {
+		string.push(Number(randomInt(0, 15)).toString(16));
+		length--;
+	}
+	return string.join("");
+};
+Object.freeze(randomHexString)
+exports.randomHexString = randomHexString;

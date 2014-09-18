@@ -1,11 +1,11 @@
 Game Scene Designer
 ===================
 
-A game-engine agnostic designer for game scenes!
+A game-engine agnostic designer tool for game scenes! Design your game scene anywhere and only once, then run it unaltered in any game engine or framework that implements support for loading the designer's game-scene file format.
 
-Design your game scene once and run it in ANY game engine or framework (as long as it implements support for the game-scene file format).
+Written entirely in HTML5, using exclusively client-side elements (absolutely no serve-side code), can be hosted on the web (even on somewhere like a dropbox public folder) or downloaded an opened in the browser (some browsers may have restrictions when loading a site with 'file' protocol instead of regular http)
 
-Try the [extremely early] demo!
+Try the [early] demo!
 
 http://gnumaru.github.io/Game-Scene-Designer/demo/
 
