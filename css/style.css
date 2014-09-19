@@ -8,5 +8,21 @@ div.main {
 	position: absolute;
 	top: 0px;
 	left: 0px;
+	width: 400px;
+	height: 700px;
+	background-color: #FFFFFF;
+}
+
+div.scrollable {
+	overflow-x: scroll;
+	overflow-y: scroll;
+}
+
+div.designArea {
+	position: absolute;
+	top: 0px;
+	left: 400px;
+	width: 800px;
+	height: 700px;
 	background-color: #FFFFFF;
 }

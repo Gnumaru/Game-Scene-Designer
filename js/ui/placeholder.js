@@ -8,7 +8,7 @@ var placeholder = function(id) {
 	div.style.left = "600px";
 	div.style.top = "100px";
 	div.addEventListener('mousedown', require("../../js/ui/behaviors/draggableBehavior").draggableBehavior, false);
-	document.body.appendChild(div);
+	document.getElementById("divDesignArea").appendChild(div);
 	console.log('Created div ' + id);
 	return div;
 }

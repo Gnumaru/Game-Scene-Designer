@@ -2,11 +2,14 @@ var draggableBehavior = function(e) {
 	var followMouseMovement = function(e) {
 		var x = e.clientX + window.pageXOffset - element.innerX;
 		x = Math.floor(parseInt(x, 10) / 16) * 16;
+		x = x > 0 ? x : 0;
 		element.entity.transform.translation.x = x;
 		element.style.left = x + "px";
+		console.log(x);
 
 		var y = e.clientY + window.pageYOffset - element.innerY;
 		y = Math.floor(parseInt(y, 10) / 16) * 16;
+		y = y > 0 ? y : 0;
 		if(!element.$scope.upperView) {
 			element.entity.transform.translation.y = window.innerHeight - y;
 		} else {
