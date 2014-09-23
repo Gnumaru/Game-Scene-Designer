@@ -1,7 +1,11 @@
 div.borderedDiv {
 	border: 1px solid black;
-	padding: 1px;
-	margin: 1px;
+	padding: 5px;
+	margin: 5px;
+	
+	-moz-box-shadow:5px 5px 5px #555555;
+	-webkit-box-shadow:5px 5px 5px #555555;
+	box-shadow:5px 5px 5px #555555;
 }
 
 div.main {

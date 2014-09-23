@@ -40,80 +40,84 @@
 			    <input type="button" ng-click="changeView();" value="Change to {{upperView ? 'Front' : 'Upper'}} View" title="Switch the view mode between front view and upper view"></input>
 			    <!-- <input id="fileInput" name="fileInput" type="file" ng-change="" ng-model="a" ng-click="jsonToScene();" ></input> -->
 			    <!-- <input type="file" ng-file-select="onFileSelect($files)"> -->
-				<br /><b>{{gameScene.name}} (Scene {{gameScene.id}})</b>
-				<table style="width:100%;">
-					<colgroup>
-						<col span="1" style="width:125px;">
-						<col span="1" style="width:*;">
-					</colgroup>
-					<tbody>
-						<tr>
-							<td valign="top">Scene ID:</td>
-							<td><input type="number" step="1" data-ng-model="gameScene.id" /></td>
-						</tr>
-						<tr>
-							<td valign="top">Scene Name:</td>
-							<td><input type="text" data-ng-model="gameScene.name" /></td>
-						</tr>
-						<tr>
-							<td valign="top">Scene Description:</td>
-							<td><textarea rows="3" cols="40" data-ng-model="gameScene.description"></textarea></td>
-						</tr>
-					</tbody>
-				</table>
-				<input type="button" ng-click="addRootEntity();" value="Add Entity to Scene"></input></td>
-				<script
-					type="text/ng-template"
-					id="nodes_renderer.html">
-
-				<div ui-tree-handle>
-					<!-- COLLAPSE BUTTON -->
-					<a
-						title="Mostra/Esconde lista de entidades filhas"
-						class="btn btn-success btn-xs"
-						data-nodrag
-						ng-click="collapseChilds(this)"><span
-						class="glyphicon"
-						ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> {{node.name}}
-					<!-- REMOVE BUTTON -->
-					<a
-						title="Remove entidade"
-						class="pull-right btn btn-danger btn-xs"
-						data-nodrag
-						ng-click="removeEntity(this)"><span class="glyphicon glyphicon-remove"></span></a>
-					<!-- TEST BUTTON -->
-					<a
-						title="Editar"
-						class="pull-right btn btn-warning btn-xs"
-						data-nodrag
-						ng-click="editEntity(this)"
-						style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span></a>
-					<!-- ADD CHILD BUTTON -->
-					<a
-						title="Adiciona Entidade Filha"
-						class="pull-right btn btn-primary btn-xs"
-						data-nodrag
-						ng-click="newChildEntity(this)"
-						style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+				<div class="borderedDiv">
+					<b>{{gameScene.name}} (Scene {{gameScene.id}})</b>
+					<table style="width:100%;">
+						<colgroup>
+							<col span="1" style="width:125px;">
+							<col span="1" style="width:*;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td valign="top">Scene ID:</td>
+								<td><input type="number" step="1" data-ng-model="gameScene.id" /></td>
+							</tr>
+							<tr>
+								<td valign="top">Scene Name:</td>
+								<td><input type="text" data-ng-model="gameScene.name" /></td>
+							</tr>
+							<tr>
+								<td valign="top">Scene Description:</td>
+								<td><textarea rows="3" cols="40" data-ng-model="gameScene.description"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<ol ui-tree-nodes ng-model="node.childEntities" ng-class="{hidden: collapsed}">
-				<li
-					ui-tree-node
-					ng-repeat="node in node.childEntities"
-					ng-include="'nodes_renderer.html'">
-				</li>
-				</ol>
-			</script>
-				<div ui-tree>
-					<ol
-						ui-tree-nodes
-						ng-model="gameScene.entities"
-						id="tree-root">
+				<div class="borderedDiv">
+					<input type="button" ng-click="addRootEntity();" value="Add Entity to Scene"></input></td>
+					<script
+						type="text/ng-template"
+						id="nodes_renderer.html">
+
+						<div ui-tree-handle>
+							<!-- COLLAPSE BUTTON -->
+							<a
+								title="Mostra/Esconde lista de entidades filhas"
+								class="btn btn-success btn-xs"
+								data-nodrag
+								ng-click="collapseChilds(this)"><span
+								class="glyphicon"
+								ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> {{node.name}}
+							<!-- REMOVE BUTTON -->
+							<a
+								title="Remove entidade"
+								class="pull-right btn btn-danger btn-xs"
+								data-nodrag
+								ng-click="removeEntity(this)"><span class="glyphicon glyphicon-remove"></span></a>
+							<!-- TEST BUTTON -->
+							<a
+								title="Editar"
+								class="pull-right btn btn-warning btn-xs"
+								data-nodrag
+								ng-click="editEntity(this)"
+								style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span></a>
+							<!-- ADD CHILD BUTTON -->
+							<a
+								title="Adiciona Entidade Filha"
+								class="pull-right btn btn-primary btn-xs"
+								data-nodrag
+								ng-click="newChildEntity(this)"
+								style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+						</div>
+						<ol ui-tree-nodes ng-model="node.childEntities" ng-class="{hidden: collapsed}">
 						<li
 							ui-tree-node
-							ng-repeat="node in gameScene.entities"
-							ng-include="'nodes_renderer.html'"></li>
-					</ol>
+							ng-repeat="node in node.childEntities"
+							ng-include="'nodes_renderer.html'">
+						</li>
+						</ol>
+					</script>
+					<div ui-tree>
+						<ol
+							ui-tree-nodes
+							ng-model="gameScene.entities"
+							id="tree-root">
+							<li
+								ui-tree-node
+								ng-repeat="node in gameScene.entities"
+								ng-include="'nodes_renderer.html'"></li>
+						</ol>
+					</div>
 				</div>
 				<div id="entityDivID" class="borderedDiv">
 					<div class="borderedDiv">
@@ -150,28 +154,23 @@
 							<tbody>
 								<tr><td colspan="3">Translation</td></tr>
 								<tr>
-									<td>x</td>
-									<td>y</td>
-									<td>z</td>
-								</tr>
-								<tr>
-									<td><input type="number" step="0.000001" ng-model="entityBeingEdited.transform.translation.x"></input></td>
-									<td><input type="number" step="0.000001" ng-model="entityBeingEdited.transform.translation.y"></input></td>
-									<td><input type="number" step="0.000001" ng-model="entityBeingEdited.transform.translation.z"></input></td>
+									<td>x<input type="number" step="1" ng-model="entityBeingEdited.transform.translation.x" ng-change="updateEntityRepresentationPosition()"></input></td>
+									<td>y<input type="number" step="1" ng-model="entityBeingEdited.transform.translation.y" ng-change="updateEntityRepresentationPosition()"></input></td>
+									<td>z<input type="number" step="1" ng-model="entityBeingEdited.transform.translation.z" ng-change="updateEntityRepresentationPosition()"></input></td>
 								</tr>
 								
 								<tr><td colspan="3">Rotation</td></tr>
 								<tr>
-									<td>x<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.rotation.x"></input></td>
-									<td>y<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.rotation.y"></input></td>
-									<td>z<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.rotation.z"></input></td>
+									<td>x<input type="number" step="1" ng-model="entityBeingEdited.transform.rotation.x" ng-change="updateEntityRepresentationRotation()"></input></td>
+									<td>y<input type="number" step="1" ng-model="entityBeingEdited.transform.rotation.y" ng-change="updateEntityRepresentationRotation()"></input></td>
+									<td>z<input type="number" step="1" ng-model="entityBeingEdited.transform.rotation.z" ng-change="updateEntityRepresentationRotation()"></input></td>
 								</tr>
 								
 								<tr><td colspan="3">Scale</td></tr>
 								<tr>
-									<td>x<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.scale.x"></input></td>
-									<td>y<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.scale.y"></input></td>
-									<td>z<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.scale.z"></input></td>
+									<td>x<input type="number" step="0.1" ng-model="entityBeingEdited.transform.scale.x" ng-change="updateEntityRepresentationScale()"></input></td>
+									<td>y<input type="number" step="0.1" ng-model="entityBeingEdited.transform.scale.y" ng-change="updateEntityRepresentationScale()"></input></td>
+									<td>z<input type="number" step="0.1" ng-model="entityBeingEdited.transform.scale.z" ng-change="updateEntityRepresentationScale()"></input></td>
 								</tr>
 							</tbody>
 						</table>

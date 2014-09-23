@@ -5,7 +5,6 @@ var draggableBehavior = function(e) {
 		x = x > 0 ? x : 0;
 		element.entity.transform.translation.x = x;
 		element.style.left = x + "px";
-		console.log(x);
 
 		var y = e.clientY + window.pageYOffset - element.innerY;
 		y = Math.floor(parseInt(y, 10) / 16) * 16;

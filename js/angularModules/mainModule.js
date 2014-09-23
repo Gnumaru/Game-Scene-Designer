@@ -71,10 +71,57 @@
 			div.scope = scope;
 			div.$scope = $scope;
 
+			newEntity.div = div;
+
 			//cant call apply
 			//scope.$apply();
 			//because "apply already in progress"
 		};
+
+		$scope.updateEntityRepresentationPosition = function(scope) {
+			$scope.entityBeingEdited.div.style.left = $scope.entityBeingEdited.transform.translation.x + "px";
+		}
+
+		$scope.updateEntityRepresentationRotation = function(scope) {
+			$scope.entityBeingEdited.div.style.rotate = $scope.entityBeingEdited.transform.rotation.z;
+			$scope.updateEntityTransform();
+		}
+
+		$scope.updateEntityRepresentationScale = function(scope) {
+			var scale = $scope.entityBeingEdited.transform.scale;
+			//"style.scale" resizes proportionally on both x and y axis 
+			//$scope.entityBeingEdited.div.style.scale = scale.x * scale.y * scale.z;
+			
+			//scaling by changing directly the div's width and height works, but may not be the best solution.
+//			$scope.entityBeingEdited.div.style.width = (scale.x * 16) + "px";
+//			$scope.entityBeingEdited.div.style.height = (scale.y * 16) + "px";
+			
+			//"style["background-size"]" is used only for images. When the placeholder gets replaced by an actual image, background-size will be used
+			//$scope.entityBeingEdited.div.style["background-size"] = (scale.x * 100) +"% "+ (scale.y * 100)+"%";
+			
+//			$scope.entityBeingEdited.div.innerDiv.style.width = (scale.x * 100) +"%";
+//			$scope.entityBeingEdited.div.innerDiv.style.height = (scale.y * 100) +"%";
+			
+			$scope.entityBeingEdited.div.firstElementChild.style.width = (scale.x * 100) +"%";
+			//$scope.updateEntityTransform();
+		}
+
+		$scope.updateEntityTransform = function() {
+			console.log("teste");
+			var transform = [
+				"translate(" + ($scope.entityBeingEdited.div.style.translate != undefined ? $scope.entityBeingEdited.div.style.translate : "0") + "px)",
+				"rotate(" + ($scope.entityBeingEdited.div.style.rotate !== undefined ? $scope.entityBeingEdited.div.style.rotate : "0") + "deg)",
+				"scale(" + ($scope.entityBeingEdited.div.style.scale !== undefined ? $scope.entityBeingEdited.div.style.scale : "1") + ")",
+				"skew(" + ($scope.entityBeingEdited.div.style.skew !== undefined ? $scope.entityBeingEdited.div.style.skew : "0") + "deg)" ];
+			transform = transform.join(" ");
+			console.log(transform);
+
+			$scope.entityBeingEdited.div.style["-webkit-transform"] = transform;
+			$scope.entityBeingEdited.div.style["transform"] = transform;
+			$scope.entityBeingEdited.div.style["-moz-transform"] = transform;
+			$scope.entityBeingEdited.div.style["-o-transform"] = transform;
+			$scope.entityBeingEdited.div.style["-ms-transform"] = transform;
+		}
 
 		$scope.addComponent = function(scope) {
 			var newComponent = clone(require("../../js/model/component").component);
@@ -139,8 +186,8 @@
 			fileInput.removeAttribute("multiple");
 
 			fileInput.addEventListener('change', function(e) {
-//				console.log(fileInput.files[0].mozFullPath);
-//				console.log(fileInput.files[0].name);
+				//				console.log(fileInput.files[0].mozFullPath);
+				//				console.log(fileInput.files[0].name);
 				var file = fileInput.files[0];
 				var textType = /text.*/;
 				var reader = new FileReader();
@@ -170,6 +217,8 @@
 			div.entity = newEntity;
 			div.scope = $scope;
 			div.$scope = $scope;
+
+			newEntity.div = div;
 		}
 
 		$scope.getTypes = function(parameter) {

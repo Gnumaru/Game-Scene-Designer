@@ -8,7 +8,14 @@ var placeholder = function(id) {
 	div.style.left = "600px";
 	div.style.top = "100px";
 	div.addEventListener('mousedown', require("../../js/ui/behaviors/draggableBehavior").draggableBehavior, false);
+	
+	var innerDiv = document.createElement("div");
+	innerDiv.style.background = div.style.background;
+	div.appendChild(innerDiv);
+	div.innerDiv = innerDiv;
+	
 	document.getElementById("divDesignArea").appendChild(div);
+	document.getElementById(""+id).appendChild(innerDiv);
 	console.log('Created div ' + id);
 	return div;
 }
