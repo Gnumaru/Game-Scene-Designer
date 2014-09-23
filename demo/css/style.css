@@ -1,12 +1,40 @@
 div.borderedDiv {
 	border: 1px solid black;
-	padding: 1px;
-	margin: 1px;
+	padding: 5px;
+	margin: 5px;
+	
+	-moz-box-shadow:5px 5px 5px #555555;
+	-webkit-box-shadow:5px 5px 5px #555555;
+	box-shadow:5px 5px 5px #555555;
 }
 
 div.main {
 	position: absolute;
 	top: 0px;
 	left: 0px;
+	width: 400px;
+	height: 700px;
 	background-color: #FFFFFF;
+}
+
+div.scrollable {
+	overflow-x: scroll;
+	overflow-y: scroll;
+}
+
+div.designArea {
+	position: absolute;
+	top: 0px;
+	left: 400px;
+	width: 800px;
+	height: 700px;
+	background-color: #FFFFFF;
+}
+
+input[type=text],
+input[type=number] {
+    width: 100%;
+    -webkit-box-sizing : border-box;‌
+    -moz-box-sizing : border-box;
+    box-sizing : border-box;
 }

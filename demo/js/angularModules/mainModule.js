@@ -71,10 +71,80 @@
 			div.scope = scope;
 			div.$scope = $scope;
 
+			newEntity.div = div;
+
 			//cant call apply
 			//scope.$apply();
 			//because "apply already in progress"
 		};
+
+		$scope.updateEntityRepresentationPosition = function(scope) {
+			$scope.entityBeingEdited.div.style.left = $scope.entityBeingEdited.transform.translation.x + "px";
+			
+//			var translation = $scope.entityBeingEdited.transform.translation;
+//			var style = $scope.entityBeingEdited.div.style;
+//			style.translationX = translation.x;
+//			style.translationY = translation.y;
+//			style.translationZ = translation.z;
+//			$scope.updateEntityTransform();
+		}
+
+		$scope.updateEntityRepresentationRotation = function(scope) {
+			var rotation = $scope.entityBeingEdited.transform.rotation;
+			var style = $scope.entityBeingEdited.div.style; 
+			style.rotateX = rotation.x;
+			style.rotateY = rotation.y;
+			style.rotateZ = rotation.z;
+			$scope.updateEntityTransform();
+		}
+
+		$scope.updateEntityRepresentationScale = function(scope) {
+			var scale = $scope.entityBeingEdited.transform.scale;
+			var style = $scope.entityBeingEdited.div.style;
+			style.scaleX = scale.x;
+			style.scaleY = scale.y;
+			style.scaleZ = scale.z;
+//			"style.scale" resizes proportionally on both x and y axis 
+//			$scope.entityBeingEdited.div.style.scale = scale.x * scale.y * scale.z;
+			
+//			scaling by changing directly the div's width and height works, but may not be the best solution.
+//			$scope.entityBeingEdited.div.style.width = (scale.x * 16) + "px";
+//			$scope.entityBeingEdited.div.style.height = (scale.y * 16) + "px";
+			
+//			"style["background-size"]" is used only for images. When the placeholder gets replaced by an actual image, background-size will be used
+//			$scope.entityBeingEdited.div.style["background-size"] = (scale.x * 100) +"% "+ (scale.y * 100)+"%";
+			
+//			$scope.entityBeingEdited.div.innerDiv.style.width = (scale.x * 100) +"%";
+//			$scope.entityBeingEdited.div.innerDiv.style.height = (scale.y * 100) +"%";
+			
+//			$scope.entityBeingEdited.div.firstElementChild.style.width = (scale.x * 100) +"%";
+			
+			$scope.updateEntityTransform();
+		}
+
+		$scope.updateEntityTransform = function() {
+			var style = $scope.entityBeingEdited.div.style;
+			var transform = [
+				"translateX(" + (style.translationX != undefined ? style.translationX : "0") + "px)",
+				"translateY(" + (style.translationY != undefined ? style.translationY : "0") + "px)",
+				"translateZ(" + (style.translationZ != undefined ? style.translationZ : "0") + "px)",
+				"rotateX(" + (style.rotateX !== undefined ? style.rotateX : "0") + "deg)",
+				"rotateY(" + (style.rotateY !== undefined ? style.rotateY : "0") + "deg)",
+				"rotateZ(" + (style.rotateZ !== undefined ? style.rotateZ : "0") + "deg)",
+				"scaleX(" + (style.scaleX !== undefined ? style.scaleX : "1") + ")",
+				"scaleY(" + (style.scaleY !== undefined ? style.scaleY : "1") + ")",
+				"scaleZ(" + (style.scaleZ !== undefined ? style.scaleZ : "1") + ")",
+				"skewX(" + (style.skewX !== undefined ? style.skewX : "0") + "deg)",
+				"skewY(" + (style.skewY !== undefined ? style.skewY : "0") + "deg)" ];
+			transform = transform.join(" ");
+//			console.log(transform);
+
+			style["-webkit-transform"] = transform;
+			style["transform"] = transform;
+			style["-moz-transform"] = transform;
+			style["-o-transform"] = transform;
+			style["-ms-transform"] = transform;
+		}
 
 		$scope.addComponent = function(scope) {
 			var newComponent = clone(require("../../js/model/component").component);
@@ -139,8 +209,8 @@
 			fileInput.removeAttribute("multiple");
 
 			fileInput.addEventListener('change', function(e) {
-//				console.log(fileInput.files[0].mozFullPath);
-//				console.log(fileInput.files[0].name);
+				//				console.log(fileInput.files[0].mozFullPath);
+				//				console.log(fileInput.files[0].name);
 				var file = fileInput.files[0];
 				var textType = /text.*/;
 				var reader = new FileReader();
@@ -170,6 +240,8 @@
 			div.entity = newEntity;
 			div.scope = $scope;
 			div.$scope = $scope;
+
+			newEntity.div = div;
 		}
 
 		$scope.getTypes = function(parameter) {
@@ -178,10 +250,6 @@
 				parameter.type = types[0];
 			}
 			return types;
-		}
-
-		$scope.show = function(a) {
-			console.log(a);
 		}
 
 		$scope.componentToJson = function(component) {

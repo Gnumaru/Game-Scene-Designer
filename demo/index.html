@@ -23,256 +23,283 @@
 	href="./css/bootstrap.css">
 </head>
 <body style="-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">
-	este
-	<br /> texto
-	<br /> está
-	<br /> atrás
-	<br /> da
-	<br /> div
-	<br /> porque
-	<br /> ela
-	<br /> está
-	<br /> com
-	<br /> "position:absolute;"
-	<br /> "top: 0px;"
-	<br /> "left: 0px;"
-	<br />
-	<div
-		ng-app="mainModule"
-		class="borderedDiv main">
+	<div ng-app="mainModule">
 		<div ng-controller="myController">
-			<!--
-		      [TREE attribute]
-		      angular-treeview: the treeview directive
-		      tree-id : each tree's unique id.
-		      tree-model : the tree model on $scope.
-		      node-id : each node's id
-		      node-label : each node's label
-		      node-children: each node's children
-		    -->
-		    <input type="button" ng-click="sceneToJson();" value="Save Scene" title="Save the current game scene to a json file."></input>
-		    <input type="button" ng-click="jsonToScene();" value="Load Scene" title="Load a previously saved game scene from a json file"></input>
-		    <input type="button" ng-click="changeView();" value="Change to {{upperView ? 'Front' : 'Upper'}} View" title="Switch the view mode between front view and upper view"></input>
-		    <!-- <input id="fileInput" name="fileInput" type="file" ng-change="" ng-model="a" ng-click="jsonToScene();" ></input> -->
-		    <!-- <input type="file" ng-file-select="onFileSelect($files)"> -->
-			<br /><b>{{gameScene.name}} (Scene {{gameScene.id}})</b>
-			<table>
-				<tr>
-					<td valign="top">Scene ID:</td>
-					<td><input type="number" step="1" data-ng-model="gameScene.id" /></td>
-				</tr>
-				<tr>
-					<td valign="top">Scene Name:</td>
-					<td><input type="text" data-ng-model="gameScene.name" /></td>
-				</tr>
-				<tr>
-					<td valign="top">Scene Description:</td>
-					<td><textarea rows="3" cols="30" data-ng-model="gameScene.description"></textarea></td>
-				</tr>
-			</table>
-			<input type="button" ng-click="addRootEntity();" value="Add Entity to Scene"></input></td>
-			<script
-				type="text/ng-template"
-				id="nodes_renderer.html">
+			<div class="borderedDiv scrollable main">
+				<!--
+			      [TREE attribute]
+			      angular-treeview: the treeview directive
+			      tree-id : each tree's unique id.
+			      tree-model : the tree model on $scope.
+			      node-id : each node's id
+			      node-label : each node's label
+			      node-children: each node's children
+			    -->
+			    <input type="button" ng-click="sceneToJson();" value="Save Scene" title="Save the current game scene to a json file."></input>
+			    <input type="button" ng-click="jsonToScene();" value="Load Scene" title="Load a previously saved game scene from a json file"></input>
+			    <input type="button" ng-click="changeView();" value="Change to {{upperView ? 'Front' : 'Upper'}} View" title="Switch the view mode between front view and upper view"></input>
+			    <!-- <input id="fileInput" name="fileInput" type="file" ng-change="" ng-model="a" ng-click="jsonToScene();" ></input> -->
+			    <!-- <input type="file" ng-file-select="onFileSelect($files)"> -->
+				<div class="borderedDiv">
+					<b>{{gameScene.name}} (Scene {{gameScene.id}})</b>
+					<table style="width:100%;">
+						<colgroup>
+							<col span="1" style="width:125px;">
+							<col span="1" style="width:*;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td valign="top">Scene ID:</td>
+								<td><input type="number" step="1" data-ng-model="gameScene.id" /></td>
+							</tr>
+							<tr>
+								<td valign="top">Scene Name:</td>
+								<td><input type="text" data-ng-model="gameScene.name" /></td>
+							</tr>
+							<tr>
+								<td valign="top">Scene Description:</td>
+								<td><textarea rows="3" cols="40" data-ng-model="gameScene.description"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="borderedDiv">
+					<input type="button" ng-click="addRootEntity();" value="Add Entity to Scene"></input></td>
+					<script
+						type="text/ng-template"
+						id="nodes_renderer.html">
 
-				<div ui-tree-handle>
-					<!-- COLLAPSE BUTTON -->
-					<a
-						title="Mostra/Esconde lista de entidades filhas"
-						class="btn btn-success btn-xs"
-						data-nodrag
-						ng-click="collapseChilds(this)"><span
-						class="glyphicon"
-						ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> {{node.name}}
-					<!-- REMOVE BUTTON -->
-					<a
-						title="Remove entidade"
-						class="pull-right btn btn-danger btn-xs"
-						data-nodrag
-						ng-click="removeEntity(this)"><span class="glyphicon glyphicon-remove"></span></a>
-					<!-- TEST BUTTON -->
-					<a
-						title="Editar"
-						class="pull-right btn btn-warning btn-xs"
-						data-nodrag
-						ng-click="editEntity(this)"
-						style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span></a>
-					<!-- ADD CHILD BUTTON -->
-					<a
-						title="Adiciona Entidade Filha"
-						class="pull-right btn btn-primary btn-xs"
-						data-nodrag
-						ng-click="newChildEntity(this)"
-						style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+						<div ui-tree-handle>
+							<!-- COLLAPSE BUTTON -->
+							<a
+								title="Mostra/Esconde lista de entidades filhas"
+								class="btn btn-success btn-xs"
+								data-nodrag
+								ng-click="collapseChilds(this)"><span
+								class="glyphicon"
+								ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> {{node.name}}
+							<!-- REMOVE BUTTON -->
+							<a
+								title="Remove entidade"
+								class="pull-right btn btn-danger btn-xs"
+								data-nodrag
+								ng-click="removeEntity(this)"><span class="glyphicon glyphicon-remove"></span></a>
+							<!-- TEST BUTTON -->
+							<a
+								title="Editar"
+								class="pull-right btn btn-warning btn-xs"
+								data-nodrag
+								ng-click="editEntity(this)"
+								style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span></a>
+							<!-- ADD CHILD BUTTON -->
+							<a
+								title="Adiciona Entidade Filha"
+								class="pull-right btn btn-primary btn-xs"
+								data-nodrag
+								ng-click="newChildEntity(this)"
+								style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+						</div>
+						<ol ui-tree-nodes ng-model="node.childEntities" ng-class="{hidden: collapsed}">
+						<li
+							ui-tree-node
+							ng-repeat="node in node.childEntities"
+							ng-include="'nodes_renderer.html'">
+						</li>
+						</ol>
+					</script>
+					<div ui-tree>
+						<ol
+							ui-tree-nodes
+							ng-model="gameScene.entities"
+							id="tree-root">
+							<li
+								ui-tree-node
+								ng-repeat="node in gameScene.entities"
+								ng-include="'nodes_renderer.html'"></li>
+						</ol>
+					</div>
 				</div>
-				<ol ui-tree-nodes ng-model="node.childEntities" ng-class="{hidden: collapsed}">
-				<li
-					ui-tree-node
-					ng-repeat="node in node.childEntities"
-					ng-include="'nodes_renderer.html'">
-				</li>
-				</ol>
-			</script>
-			<div ui-tree>
-				<ol
-					ui-tree-nodes
-					ng-model="gameScene.entities"
-					id="tree-root">
-					<li
-						ui-tree-node
-						ng-repeat="node in gameScene.entities"
-						ng-include="'nodes_renderer.html'"></li>
-				</ol>
-			</div>
-			<div id="entityDivID" class="borderedDiv">
-				<div class="borderedDiv">
-					<b>Data for entity "{{entityBeingEdited.name}}" (entity "{{entityBeingEdited.id}}")</b>
-					<table>
-						<tr>
-							<td>ID:</td>
-							<td><input type="number" step="1" ng-model="entityBeingEdited.id"></input></td>
-						</tr>
-						<tr>
-							<td>Name:</td>
-							<td><input type="text" ng-model="entityBeingEdited.name"></input></td>
-						</tr>
-						<tr>
-							<td>Description</td>
-							<td><input type="text" ng-model="entityBeingEdited.description"></input></td>
-						</tr>
-					</table>
-				</div>
-				<div class="borderedDiv">
-					<b>Transform</b>
-					<table>
-						<tr><td>Translation</td></tr>
-						<tr>
-							<td>x<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.translation.x"></input></td>
-							<td>y<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.translation.y"></input></td>
-							<td>z<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.translation.z"></input></td>
-						</tr>
-						
-						<tr><td>Rotation</td></tr>
-						<tr>
-							<td>x<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.rotation.x"></input></td>
-							<td>y<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.rotation.y"></input></td>
-							<td>z<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.rotation.z"></input></td>
-						</tr>
-						
-						<tr><td>Scale</td></tr>
-						<tr>
-							<td>x<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.scale.x"></input></td>
-							<td>y<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.scale.y"></input></td>
-							<td>z<input type="number" step="0.000001" ng-model="entityBeingEdited.transform.scale.z"></input></td>
-						</tr>
-					</table>
-				</div>
-				<div class="borderedDiv">
-					<b>Components for entity "{{entityBeingEdited.name}}" (entity "{{entityBeingEdited.id}}")</b>
-					<table>
-						<tr data-ng-repeat="component in entityBeingEdited.components">
-							<td>
-								<div class="borderedDiv">
-								<input type="button" ng-click="componentToJson(component);" value="Save Component"></input>
-									<table>
-										<tr>
-											<td><b>{{component.name}}</b></td>
-											<td><input type="button" ng-click="removeComponent(component, entityBeingEdited);" value="Remove Component"></input></td>
-										</tr>
-										
-										<tr>
-											<td>ID:</td>
-											<td><input type="number" ng-model="component.id"></input></td>
-										</tr>
-										<tr>
-											<td>Name:</td>
-											<td><input type="text" ng-model="component.name"></input></td>
-										</tr>
-										<tr>
-											<td>Description</td>
-											<td><input type="text" ng-model="component.description"></input></td>
-										</tr>
-										<tr>
-											<td>Script</td>
-											<td><input type="file" ng-model="component.modulePath" ng-click="show(component.modulePath)"></input></td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												<div class="borderedDiv">
-													<table>
-														<tr data-ng-repeat="parameter in component.parameters">
-															<td colspan="2">
-																<table>
-																	<tr>
-																		<td><b>{{parameter.label}}</b></td>
-																		<td><input type="button" ng-click="removeParameter(parameter, component);" value="Remove Parameter"></input></td>
-																	</tr>
-																	
-																	<tr>
-																		<td>Label</td>
-																		<td><input type="text" data-ng-model="parameter.label" /></td>
-																	</tr>
-																	
-																	<tr>
-																		<td>Variable Name</td>
-																		<td><input type="text" data-ng-model="parameter.variableName" /></td>
-																	</tr>
-																	
-																	<tr>
-																		<td>Type</td>
-																		<td>
-																			<!--
-																				pega elementos de um objeto
-																				<select ng-model="myColor" ng-options="color.name for color in colors">
-																			-->
-																			<!-- pega elementos de um array simples -->
-																			<select ng-model="parameter.type" ng-options="type as type for type in getTypes(parameter)"></select>
-																			<!-- <select>
-																			    <option
-																				    ng-repeat="v in getTypes(parameter)" 
-																				    value="{{v}}" 
-																				    title="{{v}}">
-																				    {{v.title}}
-																			    </option>
-																			</select>
-																			<select>
-																				<option title="testando">teste</option>
-																				<option title="umd">teste</option>
-																			</select> -->
-																		</td>
-																	</tr>
-																	
-																	<tr>
-																		<td>Current Value</td>
-																		<td><input type="text" data-ng-model="parameter.currentValue" /></td>
-																	</tr>
-																	
-																	<tr>
-																		<td>Default Value</td>
-																		<td><input type="text" data-ng-model="parameter.defaultValue" /></td>
-																	</tr>
+				<div id="entityDivID" class="borderedDiv">
+					<div class="borderedDiv">
+						<b>Data for entity "{{entityBeingEdited.name}}" (entity "{{entityBeingEdited.id}}")</b>
+						<table style="width:100%">
+							<colgroup>
+								<col span="1" style="width:50px;">
+								<col span="1" style="width:*;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td>ID:</td>
+									<td><input type="number" step="1" ng-model="entityBeingEdited.id"></input></td>
+								</tr>
+								<tr>
+									<td>Name:</td>
+									<td><input type="text" ng-model="entityBeingEdited.name"></input></td>
+								</tr>
+								<tr>
+									<td>Description:</td>
+									<td><input type="text" ng-model="entityBeingEdited.description"></input></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="borderedDiv">
+						<b>Transform</b>
+						<table style="width: 100%;">
+							<colgroup>
+								<col span="1" style="width: 33%;">
+								<col span="1" style="width: 33%;">
+								<col span="1" style="width: *;">
+							</colgroup>
+							<tbody>
+								<tr><td colspan="3">Translation</td></tr>
+								<tr>
+									<td>x<input type="number" step="1" ng-model="entityBeingEdited.transform.translation.x" ng-change="updateEntityRepresentationPosition()"></input></td>
+									<td>y<input type="number" step="1" ng-model="entityBeingEdited.transform.translation.y" ng-change="updateEntityRepresentationPosition()"></input></td>
+									<td>z<input type="number" step="1" ng-model="entityBeingEdited.transform.translation.z" ng-change="updateEntityRepresentationPosition()"></input></td>
+								</tr>
+								
+								<tr><td colspan="3">Rotation</td></tr>
+								<tr>
+									<td>x<input type="number" step="1" ng-model="entityBeingEdited.transform.rotation.x" ng-change="updateEntityRepresentationRotation()"></input></td>
+									<td>y<input type="number" step="1" ng-model="entityBeingEdited.transform.rotation.y" ng-change="updateEntityRepresentationRotation()"></input></td>
+									<td>z<input type="number" step="1" ng-model="entityBeingEdited.transform.rotation.z" ng-change="updateEntityRepresentationRotation()"></input></td>
+								</tr>
+								
+								<tr><td colspan="3">Scale</td></tr>
+								<tr>
+									<td>x<input type="number" step="0.1" ng-model="entityBeingEdited.transform.scale.x" ng-change="updateEntityRepresentationScale()"></input></td>
+									<td>y<input type="number" step="0.1" ng-model="entityBeingEdited.transform.scale.y" ng-change="updateEntityRepresentationScale()"></input></td>
+									<td>z<input type="number" step="0.1" ng-model="entityBeingEdited.transform.scale.z" ng-change="updateEntityRepresentationScale()"></input></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- DIV WITH COMPONENTS LIST AND ALL ITS SUBLISTS -->
+					<div class="borderedDiv">
+						<b>Components for entity "{{entityBeingEdited.name}}" (entity "{{entityBeingEdited.id}}")</b>
+						<table style="width:100%">
+							<colgroup>
+								<col span="1" style="width:100%;">
+							</colgroup>
+							<tbody>
+								<tr data-ng-repeat="component in entityBeingEdited.components">
+									<td>
+										<div class="borderedDiv">
+											<input type="button" ng-click="componentToJson(component);" value="Save Component"></input>
+											<table style="width:100%">
+												<colgroup>
+													<col span="1" style="width:50px;">
+													<col span="1" style="width:*;">
+												</colgroup>
+												<tbody>
+													<tr>
+														<td><b>{{component.name}}</b></td>
+														<td><input type="button" ng-click="removeComponent(component, entityBeingEdited);" value="Remove Component"></input></td>
+													</tr>
+													
+													<tr>
+														<td>ID:</td>
+														<td><input type="number" ng-model="component.id"></input></td>
+													</tr>
+													<tr>
+														<td>Name:</td>
+														<td><input type="text" ng-model="component.name"></input></td>
+													</tr>
+													<tr>
+														<td>Description</td>
+														<td><input type="text" ng-model="component.description"></input></td>
+													</tr>
+													<tr><td colspan="2">Script</td></tr>
+													<tr><td colspan="2"><input type="file" ng-model="component.modulePath" ng-click="show(component.modulePath)"></input></td></tr>
+													<tr>
+														<td colspan="2">
+															<div class="borderedDiv">
+																<table style="width:100%">
+																	<tbody>
+																		<tr data-ng-repeat="parameter in component.parameters">
+																			<td colspan="2">
+																				<table style="width:100%">
+																					<tbody>
+																						<tr>
+																							<td><b>{{parameter.label}}</b></td>
+																							<td><input type="button" ng-click="removeParameter(parameter, component);" value="Remove Parameter"></input></td>
+																						</tr>
+																						
+																						<tr>
+																							<td>Label</td>
+																							<td><input type="text" data-ng-model="parameter.label" /></td>
+																						</tr>
+																						
+																						<tr>
+																							<td>Variable Name</td>
+																							<td><input type="text" data-ng-model="parameter.variableName" /></td>
+																						</tr>
+																						
+																						<tr>
+																							<td>Type</td>
+																							<td>
+																								<!--
+																									pega elementos de um objeto
+																									<select ng-model="myColor" ng-options="color.name for color in colors">
+																								-->
+																								<!-- pega elementos de um array simples -->
+																								<select ng-model="parameter.type" ng-options="type as type for type in getTypes(parameter)"></select>
+																								<!-- <select>
+																								    <option
+																									    ng-repeat="v in getTypes(parameter)" 
+																									    value="{{v}}" 
+																									    title="{{v}}">
+																									    {{v.title}}
+																								    </option>
+																								</select>
+																								<select>
+																									<option title="testando">teste</option>
+																									<option title="umd">teste</option>
+																								</select> -->
+																							</td>
+																						</tr>
+																						
+																						<tr>
+																							<td>Current Value</td>
+																							<td><input type="text" data-ng-model="parameter.currentValue" /></td>
+																						</tr>
+																						
+																						<tr>
+																							<td>Default Value</td>
+																							<td><input type="text" data-ng-model="parameter.defaultValue" /></td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</td>
+																		</tr>
+																		<tr><td><input type="button" ng-click="addParameter(component.parameters);" value="Add Parameter"></input></td></tr>
+																	</tbody>
 																</table>
-															</td>
-														</tr>
-														<tr><td><input type="button" ng-click="addParameter(component.parameters);" value="Add Parameter"></input></td></tr>
-													</table>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="button" ng-click="addComponent();" value="Add Component"></input>
-								<input type="button" ng-click="jsonToComponent(entityBeingEdited);" value="Load Component"></input>
-								<input type="button" ng-click="reuseComponent(entityBeingEdited, globalComponent);" value="Re-use Component"></input>
-								<select ng-model="globalComponent" ng-options="component as component.name for component in loadedComponents"></select>
-							</td>
-						</tr>
-					</table>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="button" ng-click="addComponent();" value="Add Component"></input>
+										<input type="button" ng-click="jsonToComponent(entityBeingEdited);" value="Load Component"></input><br />
+										<input type="button" ng-click="reuseComponent(entityBeingEdited, globalComponent);" value="Re-use Component"></input>
+										<select ng-model="globalComponent" ng-options="component as component.name for component in loadedComponents"></select><br />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
+			</div>
+			<div
+				id="divDesignArea"
+				class="borderedDiv scrollable designArea">
 			</div>
 		</div>
 	</div>
