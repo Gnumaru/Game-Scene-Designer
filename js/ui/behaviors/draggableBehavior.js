@@ -2,10 +2,9 @@ function getStyleSheetPropertyValue(selectorText, propertyName) {
 	var returnValue = null;
 	// search backwards because the last match is more likely the right one
 	outerLoop: for(var sheetIndex = document.styleSheets.length - 1; sheetIndex > -1; sheetIndex--) {
-		var cssRules = document.styleSheets[sheetIndex].cssRules || []; // IE support
+		var cssRules = document.styleSheets[sheetIndex].cssRules || [];
 		for(var ruleIndex = 0; ruleIndex < cssRules.length; ruleIndex++) {
 			if(cssRules[ruleIndex].selectorText === selectorText) {
-				console.log(cssRules[ruleIndex].selectorText);
 				returnValue = cssRules[ruleIndex].style[propertyName];
 				break outerLoop;
 			}
@@ -19,22 +18,24 @@ var draggableBehavior = function(e) {
 		if(e.shiftKey) {//if shift is down, scale
 			
 			if(e.clientX > parseInt(element.style.left, 10) + parseInt(getStyleSheetPropertyValue("div.designArea", "left"), 10)) {
-				element.entity.transform.scale.x += 0.25;
+				element.entity.transform.scale.x += 0.1;
 			} else {
-				element.entity.transform.scale.x -= 0.25;
+				element.entity.transform.scale.x -= 0.1;
 			}
 			
 			if(e.clientY < parseInt(element.style.top, 10) + parseInt(getStyleSheetPropertyValue("div.designArea", "top"), 10)) {
-				element.entity.transform.scale.y += 0.25;
+				element.entity.transform.scale.y += 0.1;
 			} else {
-				element.entity.transform.scale.y -= 0.25;
+				element.entity.transform.scale.y -= 0.1;
 			}
+			console.log(element.style.left)
 			element.$scope.updateEntityRepresentationScale();
 		} else if(e.ctrlKey) {//if ctrl is down, rotate 
 			element.entity.transform.rotation.x = (e.clientY * 2) % 360;
 			element.entity.transform.rotation.z = (e.clientX * 2) % 360;
 			element.$scope.updateEntityRepresentationRotation();
 		} else {//move
+			console.log("move");
 			var x = e.clientX + window.pageXOffset - element.innerX;
 			x = Math.floor(parseInt(x, 10) / 16) * 16;
 			x = x > 0 ? x : 0;

@@ -137,7 +137,7 @@
 				"skewX(" + (style.skewX !== undefined ? style.skewX : "0") + "deg)",
 				"skewY(" + (style.skewY !== undefined ? style.skewY : "0") + "deg)" ];
 			transform = transform.join(" ");
-			console.log(transform);
+//			console.log(transform);
 
 			style["-webkit-transform"] = transform;
 			style["transform"] = transform;
@@ -250,10 +250,6 @@
 				parameter.type = types[0];
 			}
 			return types;
-		}
-
-		$scope.show = function(a) {
-			console.log(a);
 		}
 
 		$scope.componentToJson = function(component) {
