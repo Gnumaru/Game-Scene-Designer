@@ -104,15 +104,15 @@
 			style.scaleX = scale.x;
 			style.scaleY = scale.y;
 			style.scaleZ = scale.z;
-			//"style.scale" resizes proportionally on both x and y axis 
-			//$scope.entityBeingEdited.div.style.scale = scale.x * scale.y * scale.z;
+//			"style.scale" resizes proportionally on both x and y axis 
+//			$scope.entityBeingEdited.div.style.scale = scale.x * scale.y * scale.z;
 			
-			//scaling by changing directly the div's width and height works, but may not be the best solution.
+//			scaling by changing directly the div's width and height works, but may not be the best solution.
 //			$scope.entityBeingEdited.div.style.width = (scale.x * 16) + "px";
 //			$scope.entityBeingEdited.div.style.height = (scale.y * 16) + "px";
 			
-			//"style["background-size"]" is used only for images. When the placeholder gets replaced by an actual image, background-size will be used
-			//$scope.entityBeingEdited.div.style["background-size"] = (scale.x * 100) +"% "+ (scale.y * 100)+"%";
+//			"style["background-size"]" is used only for images. When the placeholder gets replaced by an actual image, background-size will be used
+//			$scope.entityBeingEdited.div.style["background-size"] = (scale.x * 100) +"% "+ (scale.y * 100)+"%";
 			
 //			$scope.entityBeingEdited.div.innerDiv.style.width = (scale.x * 100) +"%";
 //			$scope.entityBeingEdited.div.innerDiv.style.height = (scale.y * 100) +"%";
