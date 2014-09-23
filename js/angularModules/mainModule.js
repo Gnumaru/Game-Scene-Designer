@@ -80,15 +80,30 @@
 
 		$scope.updateEntityRepresentationPosition = function(scope) {
 			$scope.entityBeingEdited.div.style.left = $scope.entityBeingEdited.transform.translation.x + "px";
+			
+//			var translation = $scope.entityBeingEdited.transform.translation;
+//			var style = $scope.entityBeingEdited.div.style;
+//			style.translationX = translation.x;
+//			style.translationY = translation.y;
+//			style.translationZ = translation.z;
+//			$scope.updateEntityTransform();
 		}
 
 		$scope.updateEntityRepresentationRotation = function(scope) {
-			$scope.entityBeingEdited.div.style.rotate = $scope.entityBeingEdited.transform.rotation.z;
+			var rotation = $scope.entityBeingEdited.transform.rotation;
+			var style = $scope.entityBeingEdited.div.style; 
+			style.rotateX = rotation.x;
+			style.rotateY = rotation.y;
+			style.rotateZ = rotation.z;
 			$scope.updateEntityTransform();
 		}
 
 		$scope.updateEntityRepresentationScale = function(scope) {
 			var scale = $scope.entityBeingEdited.transform.scale;
+			var style = $scope.entityBeingEdited.div.style;
+			style.scaleX = scale.x;
+			style.scaleY = scale.y;
+			style.scaleZ = scale.z;
 			//"style.scale" resizes proportionally on both x and y axis 
 			//$scope.entityBeingEdited.div.style.scale = scale.x * scale.y * scale.z;
 			
@@ -102,25 +117,33 @@
 //			$scope.entityBeingEdited.div.innerDiv.style.width = (scale.x * 100) +"%";
 //			$scope.entityBeingEdited.div.innerDiv.style.height = (scale.y * 100) +"%";
 			
-			$scope.entityBeingEdited.div.firstElementChild.style.width = (scale.x * 100) +"%";
-			//$scope.updateEntityTransform();
+//			$scope.entityBeingEdited.div.firstElementChild.style.width = (scale.x * 100) +"%";
+			
+			$scope.updateEntityTransform();
 		}
 
 		$scope.updateEntityTransform = function() {
-			console.log("teste");
+			var style = $scope.entityBeingEdited.div.style;
 			var transform = [
-				"translate(" + ($scope.entityBeingEdited.div.style.translate != undefined ? $scope.entityBeingEdited.div.style.translate : "0") + "px)",
-				"rotate(" + ($scope.entityBeingEdited.div.style.rotate !== undefined ? $scope.entityBeingEdited.div.style.rotate : "0") + "deg)",
-				"scale(" + ($scope.entityBeingEdited.div.style.scale !== undefined ? $scope.entityBeingEdited.div.style.scale : "1") + ")",
-				"skew(" + ($scope.entityBeingEdited.div.style.skew !== undefined ? $scope.entityBeingEdited.div.style.skew : "0") + "deg)" ];
+				"translateX(" + (style.translationX != undefined ? style.translationX : "0") + "px)",
+				"translateY(" + (style.translationY != undefined ? style.translationY : "0") + "px)",
+				"translateZ(" + (style.translationZ != undefined ? style.translationZ : "0") + "px)",
+				"rotateX(" + (style.rotateX !== undefined ? style.rotateX : "0") + "deg)",
+				"rotateY(" + (style.rotateY !== undefined ? style.rotateY : "0") + "deg)",
+				"rotateZ(" + (style.rotateZ !== undefined ? style.rotateZ : "0") + "deg)",
+				"scaleX(" + (style.scaleX !== undefined ? style.scaleX : "1") + ")",
+				"scaleY(" + (style.scaleY !== undefined ? style.scaleY : "1") + ")",
+				"scaleZ(" + (style.scaleZ !== undefined ? style.scaleZ : "1") + ")",
+				"skewX(" + (style.skewX !== undefined ? style.skewX : "0") + "deg)",
+				"skewY(" + (style.skewY !== undefined ? style.skewY : "0") + "deg)" ];
 			transform = transform.join(" ");
 			console.log(transform);
 
-			$scope.entityBeingEdited.div.style["-webkit-transform"] = transform;
-			$scope.entityBeingEdited.div.style["transform"] = transform;
-			$scope.entityBeingEdited.div.style["-moz-transform"] = transform;
-			$scope.entityBeingEdited.div.style["-o-transform"] = transform;
-			$scope.entityBeingEdited.div.style["-ms-transform"] = transform;
+			style["-webkit-transform"] = transform;
+			style["transform"] = transform;
+			style["-moz-transform"] = transform;
+			style["-o-transform"] = transform;
+			style["-ms-transform"] = transform;
 		}
 
 		$scope.addComponent = function(scope) {
